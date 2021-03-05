@@ -4,7 +4,7 @@ import Student from "./student";
 export default function ListStudent(props) {
 
   return (
-    <div className="h-75 col-8 border p-5 overflow-scroll ">
+    <div className="h-80 col-8 border p-5 overflow-scroll ">
       <h3 className="text-warning text-center text-capitalize">
         my classroom 🏛️
       </h3>

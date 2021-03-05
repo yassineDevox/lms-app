@@ -71,13 +71,12 @@ class AdminPage extends React.Component {
   addStudent = (event) => {
     event.preventDefault();
 
-    if (this.formIsNotVaid()==true)  alert(" Fields couldnt be empty 🙄")
+    if (this.formIsNotValid() == true) alert(" Fields couldnt be empty 🙄");
     else {
-      this.setState((currentState) => {
-        currentState.list_student_data.push(currentState.new_student);
-        return currentState;
-      });
-      alert(" Student Added Successfully 😇 !!")
+      let newList = this.state.list_student_data;
+      newList.push(this.state.new_student);
+      this.setState({ list_student_data: newList });
+      alert(" Student Added Successfully 😇 !!");
     }
   };
 
