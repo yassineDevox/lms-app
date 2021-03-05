@@ -1,6 +1,6 @@
 
  export default function Student(props) {
-   console.log(props)
+   
   return (
     <div className="m-2">
       <div className="d-flex mb-4">
