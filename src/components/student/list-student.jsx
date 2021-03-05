@@ -18,7 +18,7 @@ export default function ListStudent(props) {
 
         { 
           props.dataList.map((s, index) => {
-            return <Student data={s} />;
+            return <Student data={s} key={index}/>;
           })
         }
       </div>

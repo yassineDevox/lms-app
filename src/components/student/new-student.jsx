@@ -50,6 +50,7 @@ export default function NewStudent(props) {
           </button>
         </div>
       </form>
+      <p className="text-center text-danger mt-3 fw-bold">{props.msg}</p>
     </div>
   );
 }

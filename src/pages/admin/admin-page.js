@@ -12,7 +12,8 @@ class AdminPage extends React.Component {
     super();
     //data
     this.state = {
-      new_student: {},
+      formIsValid:true,
+      new_student: new StudentModel(),
       list_student_data: [
         new StudentModel(
           "nom1",
@@ -25,8 +26,7 @@ class AdminPage extends React.Component {
           "nom2",
           "pren2",
           "nom2@gmail.com",
-          "https://i.imgur.com/1o1zEDM.png",
-          false
+          "https://i.imgur.com/1o1zEDM.png"
         ),
         new StudentModel(
           "nom3",
@@ -37,7 +37,6 @@ class AdminPage extends React.Component {
         ),
       ],
     };
-    console.log(this.state);
   }
 
   render() {
@@ -52,6 +51,7 @@ class AdminPage extends React.Component {
             data={this.state.new_student}
             handleChange={this.input}
             handleSubmit={this.addStudent}
+            msg={this.state.formIsValid ? '':'Something Goes Wrong here 🙄'}
           />
           {/* list of student  */}
           <ListStudent dataList={this.state.list_student_data} />
@@ -71,7 +71,10 @@ class AdminPage extends React.Component {
   addStudent = (event) => {
     event.preventDefault();
 
-    if (this.formIsNotValid() == true) alert(" Fields couldnt be empty 🙄");
+    if (this.formIsNotValid() == true) {
+      this.setState({formIsValid:false})
+      alert(" Fields couldnt be empty 🙄");
+    }
     else {
       let newList = this.state.list_student_data;
       newList.push(this.state.new_student);
@@ -82,11 +85,14 @@ class AdminPage extends React.Component {
 
   //validate form
   formIsNotValid = () => {
+
+    console.log(this.state.new_student)
+    let error=false;
     Object.keys(this.state.new_student).forEach((property) => {
-      if (this.state[property] == "") return true;
+      if (this.state.new_student[property] == "") error = true;
     });
 
-    return false;
+    return error;
   };
 }
 
