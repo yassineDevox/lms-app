@@ -1,0 +1,28 @@
+.h-75 {
+  height: 75vh !important;
+  max-height: 75vh;
+  overflow-y: scroll;
+}
+
+.w-70 {
+  width: 70%;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background-image: url("https://i.stack.imgur.com/l60Hf.png");
+  background-size: cover;
+  background-position: 50%;
+}
+
+.fullname {
+  margin-top: -19px;
+  width: 150px;
+  border-color: transparent !important;
+}
+
+.mz-1 {
+  zoom: 0.8!important;
+}
