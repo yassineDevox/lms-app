@@ -3,6 +3,7 @@
    
   return (
     <div className="m-2">
+        
       <div className="d-flex mb-4">
         <img
           className="border border-white p-2 mt-1"
@@ -10,6 +11,7 @@
           height={150}
           width={150}
         />
+        
         <div className="d-flex flex-column ">
           <button className="mz-1 btn btn-info m-1">
             <i className="fas fa-eye" />
