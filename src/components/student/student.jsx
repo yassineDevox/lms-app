@@ -14,7 +14,7 @@ export default function Student(props) {
           onLoad={() => setloading(false)}
         />
         <div className={loading ? "border border-white p-4 mt-1" : "d-none"}>
-          <div className="spinner-grow" role="status">
+          <div className="spinner-grow text-warning">
             <span className="sr-only">Loading...</span>
           </div>
         </div>

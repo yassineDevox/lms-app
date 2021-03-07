@@ -6,7 +6,7 @@ export default function NewStudent(props) {
       <h3 className="text-warning text-center text-capitalize">
         New Student 
       </h3>
-      <div className="avatar border mx-auto mt-4 " />
+      <div className="avatar border mx-auto mt-4 " style={{backgroundImage:`url(${props.avatar})`}}/>
       <form onSubmit={props.handleSubmit}>
         <div className="mb-4 mt-4 w-75 mx-auto">
           <input
@@ -15,6 +15,7 @@ export default function NewStudent(props) {
             placeholder="Firstname"
             type="text"
             className="form-control"
+            value={props.data.nom}
           />
         </div>
         <div className="mb-4 mt-4 w-75 mx-auto">
@@ -24,6 +25,7 @@ export default function NewStudent(props) {
             placeholder="Lastname"
             type="text"
             className="form-control"
+            value={props.data.pren}
           />
         </div>
         <div className="mb-4 mt-4 w-75 mx-auto">
@@ -33,6 +35,7 @@ export default function NewStudent(props) {
             placeholder="Email address"
             type="email"
             className="form-control"
+            value={props.data.email}
           />
         </div>
         <div className="mb-4 mt-4 w-75 mx-auto">
@@ -42,6 +45,7 @@ export default function NewStudent(props) {
             placeholder="Url Avatar"
             type="text"
             className="form-control"
+            value={props.data.avatar}
           />
         </div>
         <div className="text-center">
