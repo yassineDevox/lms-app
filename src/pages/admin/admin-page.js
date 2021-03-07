@@ -7,14 +7,19 @@ import React from "react";
 import "./admin.css";
 
 class AdminPage extends React.Component {
+
   constructor() {
     // call the constructor of the parent class React.Component
     super();
     //data
     this.state = {
-      formIsValid:true,
+
+      formIsValid: true,
+
       new_student: new StudentModel(),
+
       list_student_data: [
+
         new StudentModel(
           "nom1",
           "pren1",
@@ -51,7 +56,7 @@ class AdminPage extends React.Component {
             data={this.state.new_student}
             handleChange={this.input}
             handleSubmit={this.addStudent}
-            msg={this.state.formIsValid ? '':'Something Goes Wrong here 🙄'}
+            msg={this.state.formIsValid ? "" : "Something Goes Wrong here 🙄"}
           />
           {/* list of student  */}
           <ListStudent dataList={this.state.list_student_data} />
@@ -64,18 +69,27 @@ class AdminPage extends React.Component {
 
   //on text change on inputs
   input = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    let propertyName = event.target.name;
+    let valueInput = event.target.value;
+
+    this.setState((currentState) => {
+      currentState.new_student[propertyName] = valueInput;
+      return currentState;
+    });
   };
 
   //on add student
   addStudent = (event) => {
+
     event.preventDefault();
 
     if (this.formIsNotValid() == true) {
-      this.setState({formIsValid:false})
+      
+      this.setState({ formIsValid: false });
       alert(" Fields couldnt be empty 🙄");
-    }
-    else {
+
+    } else {
+
       let newList = this.state.list_student_data;
       newList.push(this.state.new_student);
       this.setState({ list_student_data: newList });
@@ -85,14 +99,15 @@ class AdminPage extends React.Component {
 
   //validate form
   formIsNotValid = () => {
-
-    console.log(this.state.new_student)
-    let error=false;
-    Object.keys(this.state.new_student).forEach((property) => {
-      if (this.state.new_student[property] == "") error = true;
-    });
-
-    return error;
+    if (
+      this.state.new_student.avatar == "" ||
+      this.state.new_student.pren == "" ||
+      this.state.new_student.nom == "" ||
+      this.state.new_student.email == "" 
+    ) {
+      return true;
+    }
+    return false;
   };
 }
 
