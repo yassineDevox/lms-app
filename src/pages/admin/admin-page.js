@@ -1,10 +1,9 @@
 import ListStudent from "../../components/student/list-student";
 import NewStudent from "../../components/student/new-student";
 import StudentModel from "../../models/student-model";
-
 import React from "react";
-
 import "./admin.css";
+import Header from "../../components/header/header";
 
 class AdminPage extends React.Component {
 
@@ -47,9 +46,8 @@ class AdminPage extends React.Component {
   render() {
     return (
       <>
-        <h1 className="text-center text-white mt-3">
-          Page : <span className="text-warning">Admin</span>
-        </h1>
+
+        <Header />
         <div className="container-fluid d-flex p-4">
           {/* new student component */}
           <NewStudent
