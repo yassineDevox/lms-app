@@ -1,10 +1,10 @@
 import ListStudent from "../student/list-student";
 import NewStudent from "../student/new-student";
-import StudentModel from "../../models/student-model";
 
 import React from "react";
 
 import "./home.css";
+import StudentModel from "../../models/student-model";
 
 class Home extends React.Component {
   constructor() {
@@ -12,11 +12,11 @@ class Home extends React.Component {
     super();
     //data
     this.state = {
-      list_student_data : [
-        new StudentModel("nom1","pren1","nom1@gmail.com","https://i.imgur.com/1o1zEDM.png",true),
-        new StudentModel("nom2","pren2","nom2@gmail.com","https://i.imgur.com/1o1zEDM.png",false),
-        new StudentModel("nom3","pren3","nom3@gmail.com","https://i.imgur.com/1o1zEDM.png",true)
-      ] 
+      nom: "",
+      pren: "",
+      email: "",
+      avatar: "",
+      list_student_data: [],
     };
     console.log(this.state);
   }
@@ -28,14 +28,75 @@ class Home extends React.Component {
           🧑‍🎓 LMS-APP : <span className="text-warning">Home</span> 🏠
         </h1>
         <div className="container-fluid d-flex p-4">
-          {/* new student component */}
-          <NewStudent />
-          {/* list of student  */}
+          {/* <Form handleChange={this.handleChange} /> */}
+
+          <NewStudent
+            handleChange={this.handleChange}
+            handleSubmit={this.addStudent}
+          />
+
           <ListStudent dataList={this.state.list_student_data} />
         </div>
       </>
     );
   }
+
+  handleChange = (event) => {
+    let valueInput = event.target.value;
+    let nameInput = event.target.name;
+    this.setState({
+      [nameInput]: valueInput,
+    });
+    // console.log(valueInput,nameInput)
+  };
+
+  addStudent = (event) => {
+    // ne pas acctualiser la page
+    event.preventDefault();
+
+    //vider les inputs du formulaire
+    event.target.reset();
+
+    // validation du formulaire
+
+    if (
+      this.state.nom == "" ||
+      this.state.pren == "" ||
+      this.state.avatar == "" ||
+      this.state.email == ""
+    ) {
+
+      alert("Veuillez remplir toutes les champs du formulaire 😑😠");
+
+    } else {
+
+      // creer un objet de type student
+      let nStudent = new StudentModel(
+        this.state.list_student_data.length + 1,
+        this.state.nom,
+        this.state.pren,
+        this.state.email,
+        this.state.avatar,
+        false
+      );
+
+      // vider les states 
+      this.setState({
+        nom:"",
+        pren:"",
+        email:"",
+        avatar:""
+      })
+
+      // ajouter student a la liste
+      let newStudentList = this.state.list_student_data;
+      newStudentList.push(nStudent);
+      this.setState({
+        list_student_data: newStudentList,
+      });
+
+    }
+  };
 }
 
 export default Home;

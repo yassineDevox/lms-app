@@ -1,21 +1,35 @@
 import React from "react";
 
-export default function NewStudent() {
+export default function NewStudent(props) {
   return (
     <div className="col-4 border p-5">
-      <div className="avatar border mx-auto mt-5 " />
-      <form>
+      <div className="avatar border mx-auto mt-5 "/>
+      <form onSubmit={props.handleSubmit} autoComplete="off">
         <div className="mb-4 mt-4 w-70 mx-auto">
-          <input placeholder="Firstname" type="text" className="form-control" />
+          <input
+            onChange={props.handleChange}
+            name="nom"
+            placeholder="Firstname"
+            type="text"
+            className="form-control"
+          />
         </div>
         <div className="mb-4 mt-4 w-70 mx-auto">
-          <input placeholder="Lastname" type="text" className="form-control" />
+          <input
+            onChange={props.handleChange}
+            placeholder="Lastname"
+            type="text"
+            className="form-control"
+            name="pren"
+          />
         </div>
         <div className="mb-4 mt-4 w-70 mx-auto">
           <input
             placeholder="Email address"
             type="email"
+            onChange={props.handleChange}
             className="form-control"
+            name="email"
           />
         </div>
         <div className="mb-4 mt-4 w-70 mx-auto">
@@ -23,6 +37,8 @@ export default function NewStudent() {
             placeholder="Url Avatar"
             type="text"
             className="form-control"
+            onChange={props.handleChange}
+            name="avatar"
           />
         </div>
         <div className="text-center">
