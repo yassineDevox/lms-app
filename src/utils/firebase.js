@@ -12,7 +12,7 @@ import 'firebase/auth';
   };
 
 
-  // Initialize Firebase  
+// Initialize Firebase  
 const app = firebase.initializeApp(firebaseConfig);  
   
 //exporter notre base de données
