@@ -16,6 +16,6 @@ import 'firebase/auth';
 const app = firebase.initializeApp(firebaseConfig);  
   
 //exporter notre base de données
-export default fireDB; 
+export default app; 
 //export the auth app
 export const auth = app.auth();
