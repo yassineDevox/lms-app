@@ -110,7 +110,9 @@ class Home extends React.Component {
         let newListStudent = this.state.list_student_data;
         newListStudent.forEach((s) => {
           if (s.id == 0) s.id = id_new_student;
-        });
+        })
+        // modifier la liste sur le state
+        this.setState({list_student_data:newListStudent})
       });
     }
   };
