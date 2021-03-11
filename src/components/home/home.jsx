@@ -5,6 +5,7 @@ import React from "react";
 
 import "./home.css";
 import StudentModel from "../../models/student-model";
+import axios from "../../utils/axios";
 
 class Home extends React.Component {
   constructor() {
@@ -72,7 +73,6 @@ class Home extends React.Component {
 
       // creer un objet de type student
       let nStudent = new StudentModel(
-        this.state.list_student_data.length + 1,
         this.state.nom,
         this.state.pren,
         this.state.email,
@@ -94,6 +94,10 @@ class Home extends React.Component {
       this.setState({
         list_student_data: newStudentList,
       });
+
+      // ajouter l'etudiant a la partie serveur (firebase) en utilsant axios 
+      axios.post("students.json",nStudent)
+
 
     }
   };
