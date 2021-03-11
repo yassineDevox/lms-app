@@ -37,8 +37,9 @@ class Home extends React.Component {
           />
 
           <ListStudent
-           dataList={this.state.list_student_data} 
-           handleDeleteStudent={this.deleteStudent} />
+            dataList={this.state.list_student_data}
+            handleDeleteStudent={this.deleteStudent}
+          />
         </div>
       </>
     );
@@ -103,7 +104,7 @@ class Home extends React.Component {
         pren: nStudent.pren,
         email: nStudent.email,
         avatar: nStudent.avatar,
-        isPresent : nStudent.isPresent
+        isPresent: nStudent.isPresent,
       };
       axios.post("students.json", data_student).then((response) => {
         let id_new_student = response.data.name;
@@ -112,9 +113,9 @@ class Home extends React.Component {
         let newListStudent = this.state.list_student_data;
         newListStudent.forEach((s) => {
           if (s.id == 0) s.id = id_new_student;
-        })
+        });
         // modifier la liste sur le state
-        this.setState({list_student_data:newListStudent})
+        this.setState({ list_student_data: newListStudent });
       });
     }
   };
@@ -122,45 +123,44 @@ class Home extends React.Component {
   // recuperer la liste des etudiants depuis firebase onload page avec firebase
   componentDidMount() {
     axios.get("students.json").then((response) => {
-      //extraire toutes les clé de l'objet data
-      let keys = Object.keys(response.data);
+      if (response.data != null) {
+        //extraire toutes les clé de l'objet data
+        let keys = Object.keys(response.data);
 
-      //parcourir les keys
-      let listEtudiant  = keys.map((k) => {
-        let ns = new StudentModel(
-          k,
-          response.data[k].nom,
-          response.data[k].pren,
-          response.data[k].email,
-          response.data[k].avatar,
-          response.data[k].isPresent
-        );
-       return ns;   
-      });
-      
-      //ajouter la liste 
-      this.setState({list_student_data:listEtudiant})
+        //parcourir les keys
+        let listEtudiant = keys.map((k) => {
+          let ns = new StudentModel(
+            k,
+            response.data[k].nom,
+            response.data[k].pren,
+            response.data[k].email,
+            response.data[k].avatar,
+            response.data[k].isPresent
+          );
+          return ns;
+        });
 
-      console.log(listEtudiant);
+        //ajouter la liste
+        this.setState({ list_student_data: listEtudiant });
+      }
     });
   }
 
-  //----- handle delete 
-  deleteStudent = (idStudent) =>{
+  //----- handle delete
+  deleteStudent = (idStudent) => {
+    let choice = window.confirm("Are you sure ?");
 
-    //supprimer un etudiant depuis firebase 
-    // alert(idStudent)
-    axios.delete("students/"+idStudent+".json").then(()=>{
+    if (choice == true) {
+      //supprimer un etudiant depuis firebase
+      axios.delete("students/" + idStudent + ".json").then(() => {
+        let newList = this.state.list_student_data.filter(
+          (s) => s.id != idStudent
+        );
 
-        let newList = this.state.list_student_data;
-        newList = newList.filter(s=>s.id != idStudent);
-        this.setState({list_student_data:newList})
-    })
-    //supprimer man html 
-
-
-  }
-
+        this.setState({ list_student_data: newList });
+      });
+    }
+  };
 }
 
 export default Home;
