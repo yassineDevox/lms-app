@@ -66,11 +66,8 @@ class Home extends React.Component {
       this.state.avatar == "" ||
       this.state.email == ""
     ) {
-
       alert("Veuillez remplir toutes les champs du formulaire 😑😠");
-
     } else {
-
       // creer un objet de type student
       let nStudent = new StudentModel(
         0,
@@ -81,52 +78,68 @@ class Home extends React.Component {
         false
       );
 
-      // vider les states 
+      // vider les states
       this.setState({
-        nom:"",
-        pren:"",
-        email:"",
-        avatar:""
-      })
+        nom: "",
+        pren: "",
+        email: "",
+        avatar: "",
+      });
 
       // ajouter student a la liste
       let newStudentList = this.state.list_student_data;
-      
+
       newStudentList.push(nStudent);
       this.setState({
         list_student_data: newStudentList,
       });
 
-      // ajouter l'etudiant a la partie serveur (firebase) en utilsant axios 
+      // ajouter l'etudiant a la partie serveur (firebase) en utilsant axios
 
       const data_student = {
-        nom:nStudent.nom,
-        pren:nStudent.pren,
-        email:nStudent.email,
-        avatar:nStudent.avatar
-      }
-      axios.post("students.json",data_student).then((response)=>{
+        nom: nStudent.nom,
+        pren: nStudent.pren,
+        email: nStudent.email,
+        avatar: nStudent.avatar,
+        isPresent : nStudent.isPresent
+      };
+      axios.post("students.json", data_student).then((response) => {
+        let id_new_student = response.data.name;
 
-         let id_new_student = response.data.name; 
-
-         const myNewStudent = {
-           nom:nStudent.nom,
-            pren:nStudent.pren,
-            email:nStudent.email,
-            avatar:nStudent.avatar,
-            id:id_new_student
-         }
-
-
-
-        console.log(myNewStudent)
-
-
-      })
-
-
+        // chercher l'etudiant qui a l'id == 0 sur la liste
+        let newListStudent = this.state.list_student_data;
+        newListStudent.forEach((s) => {
+          if (s.id == 0) s.id = id_new_student;
+        });
+      });
     }
   };
+
+  // recuperer la liste des etudiants depuis firebase onload page avec firebase
+  componentDidMount() {
+    axios.get("students.json").then((response) => {
+      //extraire toutes les clé de l'objet data
+      let keys = Object.keys(response.data);
+
+      //parcourir les keys
+      let listEtudiant  = keys.map((k) => {
+        let ns = new StudentModel(
+          k,
+          response.data[k].nom,
+          response.data[k].pren,
+          response.data[k].email,
+          response.data[k].avatar,
+          response.data[k].isPresent
+        );
+       return ns;   
+      });
+      
+      //ajouter la liste 
+      this.setState({list_student_data:listEtudiant})
+
+      console.log(listEtudiant);
+    });
+  }
 }
 
 export default Home;
