@@ -13,7 +13,14 @@ export default function ListStudent(props) {
         />
         <div className="p-5 d-flex flex-wrap justify-content-center ">
            {
-            props.dataList.map(s => <Student key={s.id} data={s} />)
+            props.dataList.map(s => 
+            
+              <Student 
+                    key={s.id} 
+                    data={s}
+                    handleDelete={props.handleDeleteStudent}
+              />
+            )
            }
         </div>
     </div>

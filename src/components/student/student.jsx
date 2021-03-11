@@ -31,7 +31,8 @@ export default function Student(props) {
           <button className="mz-1 btn btn-warning m-1">
             <i className="fas fa-edit" />
           </button>
-          <button className="mz-1 btn btn-danger m-1">
+          <button 
+          onClick={() => props.handleDelete(props.data.id)} className="mz-1 btn btn-danger m-1">
             <i className="fas fa-trash" />
           </button>
         </div>
