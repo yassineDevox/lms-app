@@ -8,7 +8,7 @@ import 'firebase/auth';
     projectId: "lms-project-966cf",
     storageBucket: "lms-project-966cf.appspot.com",
     messagingSenderId: "874849901753",
-    appId: "1:874849901753:web:243346e755c02343090f68"
+    appId: "1:874849901753:web:243346e755c0234f68"
   };
 
 
