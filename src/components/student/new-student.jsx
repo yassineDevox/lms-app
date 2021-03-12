@@ -24,6 +24,7 @@ export default function NewStudent(props) {
             placeholder="Firstname"
             type="text"
             className="form-control"
+            
           />
         </div>
         <div className="mb-4 mt-4 w-70 mx-auto">

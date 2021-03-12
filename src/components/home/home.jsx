@@ -17,6 +17,7 @@ class Home extends React.Component {
       pren: "",
       email: "",
       avatar: "",
+      updatedStudent_id:-1,
       list_student_data: [],
       textBtnState:"Add Student",
       iconBtnState:"fas fa-plus-circle"
@@ -39,6 +40,10 @@ class Home extends React.Component {
             handleChange={this.handleChange}
             handleSubmit={this.addStudent}
             avatar={this.state.avatar}
+            nom={this.state.nom}
+            pren={this.state.pren}
+            email={this.state.email}
+
           />
 
           <ListStudent
@@ -175,8 +180,19 @@ class Home extends React.Component {
    
     //changer le text du button newStudent 
     this.setState({textBtnState:"Edit Student"})
+    
     //changer l'icon du button newStudent 
     this.setState({iconBtnState:"fas fa-edit"})
+
+    // ajouter les information au state
+    this.setState({
+      nom:updatedStudent.nom,
+      pren:updatedStudent.pren,
+      email:updatedStudent.email,
+      avatar:updatedStudent.avatar,
+      updatedStudent_id:updatedStudent.id
+    })
+
 
 
     console.log(updatedStudent)
