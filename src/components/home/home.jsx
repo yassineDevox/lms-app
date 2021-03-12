@@ -40,7 +40,9 @@ class Home extends React.Component {
             nom={this.state.nom}
             pren={this.state.pren}
             email={this.state.email}
+
             avatar={this.state.avatar}
+            
             action={this.state.action}
           />
 
@@ -162,11 +164,12 @@ class Home extends React.Component {
     if (choice == true) {
       //supprimer un etudiant depuis firebase
       axios.delete("students/" + idStudent + ".json").then(() => {
+       
         let newList = this.state.list_student_data.filter(
           (s) => s.id != idStudent
         );
 
-        this.setState({ list_student_data: newList });
+        this.setState({ list_student_data : newList });
       });
     }
   };
