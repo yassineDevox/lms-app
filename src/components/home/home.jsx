@@ -1,5 +1,7 @@
 import ListStudent from "../student/list-student";
-import NewStudent from "../student/new-student";
+
+//----- je peux avoir n'importe quel nom de composant grace a export default
+import FormStudent from "../student/new-student";
 
 import React from "react";
 
@@ -17,10 +19,11 @@ class Home extends React.Component {
       pren: "",
       email: "",
       avatar: "",
-      updatedStudent_id:-1,
+      updatedStudent_id: -1,
       list_student_data: [],
-      textBtnState:"Add Student",
-      iconBtnState:"fas fa-plus-circle"
+      textBtnState: "Add Student",
+      iconBtnState: "fas fa-plus-circle",
+      action: "ADD",
     };
     console.log(this.state);
   }
@@ -34,22 +37,23 @@ class Home extends React.Component {
         <div className="container-fluid d-flex p-4">
           {/* <Form handleChange={this.handleChange} /> */}
 
-          <NewStudent
+          <FormStudent
             textBtn={this.state.textBtnState}
             iconBtn={this.state.iconBtnState}
-            handleChange={this.handleChange}
-            handleSubmit={this.addStudent}
             avatar={this.state.avatar}
             nom={this.state.nom}
             pren={this.state.pren}
             email={this.state.email}
-
+            action={this.state.action}
+            handleChange={this.handleChange}
+            handleAddSubmit={this.addStudent}
+            handleEditSubmit={this.submitEditStudent}
           />
 
           <ListStudent
             dataList={this.state.list_student_data}
             handleDeleteFromHome={this.deleteStudent}
-            handleEditFromHome = {this.editStudent}
+            handleEditFromHome={this.editStudent}
           />
         </div>
       </>
@@ -164,40 +168,87 @@ class Home extends React.Component {
     if (choice == true) {
       //supprimer un etudiant depuis firebase
       axios.delete("students/" + idStudent + ".json").then(() => {
-       
         let newList = this.state.list_student_data.filter(
           (s) => s.id != idStudent
         );
 
-        this.setState({ list_student_data : newList });
+        this.setState({ list_student_data: newList });
       });
     }
   };
 
-  //----editStudent
+  //----editStudent lorsqu'on click sur btn update icon (student)
+  editStudent = (updatedStudent) => {
+    //changer le text du button newStudent
+    this.setState({ textBtnState: "Edit Student" });
 
-  editStudent = (updatedStudent)=>{
-   
-    //changer le text du button newStudent 
-    this.setState({textBtnState:"Edit Student"})
-    
-    //changer l'icon du button newStudent 
-    this.setState({iconBtnState:"fas fa-edit"})
+    //changer l'icon du button newStudent
+    this.setState({ iconBtnState: "fas fa-edit" });
 
     // ajouter les information au state
     this.setState({
-      nom:updatedStudent.nom,
-      pren:updatedStudent.pren,
-      email:updatedStudent.email,
-      avatar:updatedStudent.avatar,
-      updatedStudent_id:updatedStudent.id
-    })
+      nom: updatedStudent.nom,
+      pren: updatedStudent.pren,
+      email: updatedStudent.email,
+      avatar: updatedStudent.avatar,
+      updatedStudent_id: updatedStudent.id,
+    });
 
+    // changer l'action du state
+    this.setState({ action: "EDIT" });
 
+    console.log(updatedStudent);
+  };
 
-    console.log(updatedStudent)
-  }
-  
+  //------- submitEditStudent la fonction qui va changer l'etudiant depuis firebase
+  submitEditStudent = (event) => {
+    // ne pas acctualiser la page
+    event.preventDefault();
+
+    //partie data a envoyer a firebase
+    const student_data = {
+      nom: this.state.nom,
+      pren: this.state.pren,
+      email: this.state.email,
+      avatar: this.state.avatar,
+    };
+
+    // appel a la fonction put de axios
+    axios
+      .put("students/" + this.state.updatedStudent_id + ".json", student_data)
+      .then((response) => {
+        //changer l'etudiant dans la liste
+        let newList = this.state.list_student_data;
+        newList.forEach((s) => {
+          if (s.id == this.state.updatedStudent_id) {
+            
+            s.nom = response.data.nom;
+            s.pren = response.data.pren;
+            s.email = response.data.email;
+            s.avatar = response.data.avatar;
+          }
+        });
+
+        // modifier la liste du state
+        this.setState({list_student_data:newList})
+
+        // vider le formulaire 
+        event.target.reset();
+        
+        //vider les variables state 
+        this.setState({
+          nom:"",
+          pren:"",
+          email:"",
+          avatar:"",
+          updatedStudent_id:-1,
+          textBtnState: "Add Student",
+          iconBtnState: "fas fa-plus-circle",
+          action: "ADD",
+        })
+
+      });
+  };
 }
 
 export default Home;
