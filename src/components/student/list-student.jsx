@@ -19,6 +19,7 @@ export default function ListStudent(props) {
                     key={s.id} 
                     data={s}
                     handleDelete={props.handleDeleteStudent}
+                    handleUpdate={props.handleUpdateStudent}
               />
             )
            }
