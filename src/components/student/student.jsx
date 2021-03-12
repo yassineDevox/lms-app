@@ -17,7 +17,7 @@ export default function Student(props) {
           width={150}
           onLoad = {()=>{setloading(false)}}
         />
-        {/* loading imag */}
+        {/* loading image */}
         <div className={loading==true ? "border border-white p-5":"d-none"}>
           <div className="spinner-grow text-warning " role="status">
             <span className="sr-only">Loading...</span>
@@ -28,17 +28,17 @@ export default function Student(props) {
           <button className="mz-1 btn btn-info m-1">
             <i className="fas fa-eye" />
           </button>
-          <button onClick={ () => props.handleUpdate(props.data) } className="mz-1 btn btn-warning m-1">
+          {/* lors du click tu passe l'objet student vers list  */}
+          <button onClick={ () => props.handleEditFromList(props.data) } className="mz-1 btn btn-warning m-1">
             <i className="fas fa-edit" />
           </button>
           <button 
-          onClick={() => props.HandleDeleteFromList(props.data.id)} className="mz-1 btn btn-danger m-1">
+          onClick={() => props.handleDeleteFromList(props.data.id)} className="mz-1 btn btn-danger m-1">
             <i className="fas fa-trash" />
           </button>
         </div>
       </div>
       <p className="text-center text-white fullname">
-        {" "}
         {props.data.nom} {props.data.pren}
       </p>
     </div>

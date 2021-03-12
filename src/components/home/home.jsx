@@ -17,9 +17,9 @@ class Home extends React.Component {
       pren: "",
       email: "",
       avatar: "",
-      action: "ADD_STUDENT",
-      updatedStudent_id: -1,
       list_student_data: [],
+      textBtnState:"Add Student",
+      iconBtnState:"fas fa-plus-circle"
     };
     console.log(this.state);
   }
@@ -34,22 +34,17 @@ class Home extends React.Component {
           {/* <Form handleChange={this.handleChange} /> */}
 
           <NewStudent
+            textBtn={this.state.textBtnState}
+            iconBtn={this.state.iconBtnState}
             handleChange={this.handleChange}
-            handleAddSubmit={this.addStudent}
-            handleEditSubmit={this.editStudent}
-            nom={this.state.nom}
-            pren={this.state.pren}
-            email={this.state.email}
-
+            handleSubmit={this.addStudent}
             avatar={this.state.avatar}
-            
-            action={this.state.action}
           />
 
           <ListStudent
             dataList={this.state.list_student_data}
             handleDeleteFromHome={this.deleteStudent}
-            handleUpdateStudent={this.updateStudent}
+            handleEditFromHome = {this.editStudent}
           />
         </div>
       </>
@@ -173,65 +168,20 @@ class Home extends React.Component {
       });
     }
   };
-  //------- handle update
-  updateStudent = (updatedStudent) => {
-    //--- ajouter les infos au formulaire  cad au donnees du state
-    this.setState({
-      nom: updatedStudent.nom,
-      pren: updatedStudent.pren,
-      email: updatedStudent.email,
-      avatar: updatedStudent.avatar,
-    });
 
-    //----- changer le text du button (Edit Student)
-    this.setState({
-      action: "EDIT_STUDENT",
-    });
+  //----editStudent
 
-    //------- sauvgarder l'id de l'etudiant
-    this.setState({
-      idStudentUpdated: updatedStudent.id,
-    });
+  editStudent = (updatedStudent)=>{
+   
+    //changer le text du button newStudent 
+    this.setState({textBtnState:"Edit Student"})
+    //changer l'icon du button newStudent 
+    this.setState({iconBtnState:"fas fa-edit"})
 
-    console.log(updatedStudent);
-  };
 
-  //----- on edit student submit
-  editStudent = (event) => {
-    //------ ne pas acctuliser la page
-    event.preventDefault();
-
-    //----- modifier l'etudiant depuis firebase
-    const data_updated_student = {
-      nom: this.state.nom,
-      pren: this.state.pren,
-      email: this.state.email,
-      avatar: this.state.avatar,
-    };
-    //-------- 
-
-    axios
-      .put(
-        "students/" + this.state.updatedStudent_id + ".json",
-        data_updated_student
-      )
-      .then((response) => {
-        //modifier l'objet student sur la liste sans actualiser la page
-        let newList = this.state.list_student_data;
-        newList.forEach((s) => {
-          if (s.id == this.state.updatedStudent_id) {
-            s.nom = this.state.nom;
-            s.pren = this.state.pren;
-            s.email = this.state.email;
-            s.avatar = this.state.avatar;
-          }
-
-          this.setState({ list_student_data: newList });
-        });
-
-        console.log(response);
-      });
-  };
+    console.log(updatedStudent)
+  }
+  
 }
 
 export default Home;

@@ -13,11 +13,7 @@ export default function NewStudent(props) {
         }}
       />
       <form
-        onSubmit={
-          props.action == "ADD_STUDENT"
-            ? props.handleAddSubmit
-            : props.handleEditSubmit
-        }
+        onSubmit={props.handleSubmit}
         autoComplete="off"
       >
         <div className="mb-4 mt-4 w-70 mx-auto">
@@ -61,17 +57,9 @@ export default function NewStudent(props) {
           />
         </div>
         <div className="text-center">
-          {props.action == "ADD_STUDENT" ? (
             <button type="submit" className="btn btn-warning">
-              {" "}
-              <i className="fas fa-plus-circle" /> Add Stuednt
+              <i className={props.iconBtn} /> {props.textBtn}
             </button>
-          ) : (
-            <button type="submit" className="btn btn-warning">
-              {" "}
-              <i className="fas fa-edit" /> Edit Student
-            </button>
-          )}
         </div>
       </form>
     </div>

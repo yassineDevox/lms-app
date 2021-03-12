@@ -18,8 +18,8 @@ export default function ListStudent(props) {
               <Student 
                     key={s.id} 
                     data={s}
-                    HandleDeleteFromList={props.handleDeleteFromHome}
-                    handleUpdate={props.handleUpdateStudent}
+                    handleDeleteFromList={props.handleDeleteFromHome}
+                    handleEditFromList = {props.handleEditFromHome}
               />
             )
            }
