@@ -3,12 +3,13 @@ import React from "react";
 export default function NewStudent(props) {
   return (
     <div className="col-4 border p-5">
+      <h1 style={{fontSize:"23px"}} className="title text-warning "> Add Student</h1>
       <div
-        className="avatar border mx-auto mt-5 "
+        className="avatar border mx-auto mt-4 "
         style={{
-          backgroundImage: `url(${
-            props.avatar || "https://i.stack.imgur.com/l60Hf.png"
-          })`,
+          backgroundImage: `url (
+            ${props.avatar || "https://i.stack.imgur.com/l60Hf.png"}
+          )`,
           backgroundSize: "cover"
         }}
       />

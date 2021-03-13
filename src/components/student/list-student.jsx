@@ -6,15 +6,18 @@ export default function ListStudent(props) {
   return (
     
     <div className="h-75 col-8 border p-5 overflow-scroll ">
+        <div className="d-flex justify-content-center">
         <input
         onKeyUp = {props.handleFilterFromHome}
         type="text"
-        className="w-50 form-control mx-auto"
-        placeholder="Filter students by firstname or lastname"
+        className="w-50 form-control m-1"
+        placeholder="Filter students by their first or last name"
         />
-        <div className="p-5 d-flex flex-wrap justify-content-center ">
+        <div className="btn btn-warning"><i className="fas fa-search"></i></div>
+        </div>
+        <div className="p-4 d-flex flex-wrap justify-content-center ">
            {
-            props.dataList.map(s => 
+            props.dataList.map( s => 
             
               <Student 
                     key={s.id} 

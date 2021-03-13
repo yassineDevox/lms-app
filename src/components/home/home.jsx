@@ -23,7 +23,7 @@ class Home extends React.Component {
       updatedStudent_id: -1,
       list_student_data: [],
       backupForFilterList : [],
-      textBtnState: "Add Student",
+      textBtnState: "Add",
       iconBtnState: "fas fa-plus-circle",
       action: "ADD",
     };
@@ -33,12 +33,11 @@ class Home extends React.Component {
   render() {
     return (
       <>
-        <h1 className="text-center text-white mt-5">
-          🧑‍🎓 LMS-APP : <span className="text-warning">Home</span> 🏠
+
+        <h1 className="title mt-5">
+           <span className="text-warning"> Manage Students</span>
         </h1>
         <div className="container-fluid d-flex p-4">
-          {/* <Form handleChange={this.handleChange} /> */}
-
           <FormStudent
             textBtn={this.state.textBtnState}
             iconBtn={this.state.iconBtnState}
@@ -74,7 +73,7 @@ class Home extends React.Component {
   }
 
   //------ view more info of the student 
-  viewMoreInfoStudent = (studentInfos)=>{
+  viewMoreInfoStudent = (studentInfos) =>{
 
     //------ ajouter les infos au state
     this.setState({
@@ -111,8 +110,6 @@ class Home extends React.Component {
       this.setState({list_student_data:newList})
     }
     
-
-
     console.log(event.target.value);
   };
 
