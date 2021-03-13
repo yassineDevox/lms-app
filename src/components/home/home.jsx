@@ -8,6 +8,7 @@ import React from "react";
 import "./home.css";
 import StudentModel from "../../models/student-model";
 import axios from "../../utils/axios";
+import ModalViewInfo from "../../shared/modal-view-info";
 
 class Home extends React.Component {
   constructor() {
@@ -56,10 +57,38 @@ class Home extends React.Component {
             handleDeleteFromHome={this.deleteStudent}
             handleEditFromHome={this.editStudent}
             handleFilterFromHome={this.filterStudentsByName}
+            handleViewMoreInfoFromHome = {this.viewMoreInfoStudent}
           />
         </div>
+
+        {/* My Modal for view more student infos */}
+        <ModalViewInfo 
+            avatar={this.state.avatar}
+            nom={this.state.nom}
+            pren={this.state.pren}
+            email={this.state.email}
+            action={this.state.action}
+        />
       </>
     );
+  }
+
+  //------ view more info of the student 
+  viewMoreInfoStudent = (studentInfos)=>{
+
+    //------ ajouter les infos au state
+    this.setState({
+      nom:studentInfos.nom,
+      pren:studentInfos.pren,
+      email:studentInfos.email,
+      avatar:studentInfos.avatar,
+      isPresent:studentInfos.isPresent,//just added for view details 
+      updatedStudent_id:studentInfos.id
+    })
+
+    //------ passer toute les state vers le composant modal 
+
+
   }
 
   //------- filter students by name
