@@ -23,7 +23,7 @@ export default function ModalViewInfo(props) {
               aria-label="Close"
             >
               <span aria-hidden="true">
-                <i class="fas fa-times-circle text-danger"></i>
+                <i className="fas fa-times-circle text-danger"></i>
               </span>
             </button>
           </div>
@@ -35,25 +35,25 @@ export default function ModalViewInfo(props) {
                 style={{ width: "13rem" }}
               />
               <div className="card-body">
-                <span class="badge bg-success text-white m-1">Nom : </span>
-                <br /> <span class="m-1">{props.nom}</span> <br />
-                <span class="badge bg-info text-white m-1">Prenom : </span>{" "}
+                <span className="badge bg-success text-white m-1">Nom : </span>
+                <br /> <span className="m-1">{props.nom}</span> <br />
+                <span className="badge bg-info text-white m-1">Prenom : </span>{" "}
                 <br />
-                <span class="m-1">{props.pren}</span> <br />
-                <span class="badge bg-warning text-dark m-1">Email : </span>
+                <span className="m-1">{props.pren}</span> <br />
+                <span className="badge bg-warning text-dark m-1">Email : </span>
                 <br />
-                <span class="m-1">{props.email}</span> <br />
+                <span className="m-1">{props.email}</span> <br />
               </div>
             </div>
             <div className="modal-footer pb-0">
                 <button
                   type="button"
-                  class="btn btn-success"
+                  className="btn btn-success"
                 >
-                  PRESENT <i class="fas fa-smile-beam"></i>
+                  PRESENT <i className="fas fa-smile-beam"></i>
                 </button>
-                <button type="button" class="btn btn-danger">
-                  ABSENT <i class="fas fa-skull-crossbones"></i>
+                <button type="button" className="btn btn-danger">
+                  ABSENT <i className="fas fa-skull-crossbones"></i>
                 </button>
               
             </div>

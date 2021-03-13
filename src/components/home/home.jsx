@@ -49,6 +49,7 @@ class Home extends React.Component {
             handleChange={this.handleChange}
             handleAddSubmit={this.addStudent}
             handleEditSubmit={this.submitEditStudent}
+            handleCancelEditFromHome={this.handleCancelEdit}
           />
 
           <ListStudent
@@ -70,6 +71,22 @@ class Home extends React.Component {
         />
       </>
     );
+  }
+  //------- handleCancelEdit
+  handleCancelEdit = () => {
+         
+
+      //vider les variables state
+      this.setState({
+        nom: "",
+        pren: "",
+        email: "",
+        avatar: "",
+        updatedStudent_id: -1,
+        textBtnState: "Add ",
+        iconBtnState: "fas fa-plus-circle",
+        action: "ADD",
+      });
   }
 
   //------ view more info of the student 
@@ -236,8 +253,9 @@ class Home extends React.Component {
 
   //----editStudent lorsqu'on click sur btn update icon (student)
   editStudent = (updatedStudent) => {
+
     //changer le text du button newStudent
-    this.setState({ textBtnState: "Edit Student" });
+    this.setState({ textBtnState: "Edit" });
 
     //changer l'icon du button newStudent
     this.setState({ iconBtnState: "fas fa-edit" });
@@ -300,7 +318,7 @@ class Home extends React.Component {
           email: "",
           avatar: "",
           updatedStudent_id: -1,
-          textBtnState: "Add Student",
+          textBtnState: "Add ",
           iconBtnState: "fas fa-plus-circle",
           action: "ADD",
         });
