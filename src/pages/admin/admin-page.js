@@ -1,16 +1,19 @@
-import ListStudent from "../student/list-student";
-
-//----- je peux avoir n'importe quel nom de composant grace a export default
-import FormStudent from "../student/new-student";
-
 import React from "react";
 
-import "./home.css";
-import StudentModel from "../../models/student-model";
-import axios from "../../utils/axios";
-import ModalViewInfo from "../../shared/modal-view-info";
+//----- importation des composants
+import FormStudent from "/components/form-student";
+import ListStudent from "/components/list-student";
+import StudentModel from "/models/student-model";
+import ModalViewInfo from "/shared/modal-view-info";
 
-class Home extends React.Component {
+//--- import axios for ajax functions
+import axios from "/utils/axios";
+
+//--- import css
+import "./admin-page.css";
+
+
+class AdminPage extends React.Component {
   constructor() {
     // call the constructor of the parent class React.Component
     super();
@@ -27,17 +30,16 @@ class Home extends React.Component {
       iconBtnState: "fas fa-plus-circle",
       action: "ADD",
     };
-    console.log(this.state);
   }
 
   render() {
     return (
       <>
-
         <h1 className="title mt-5">
            <span className="text-warning"> Manage Students</span>
         </h1>
         <div className="container-fluid d-flex p-4">
+
           <FormStudent
             textBtn={this.state.textBtnState}
             iconBtn={this.state.iconBtnState}
@@ -130,6 +132,7 @@ class Home extends React.Component {
     console.log(event.target.value);
   };
 
+  //------- si l'utilisateur tape qlq chose dans les input tu le met dans les variables state (nom,pren ...)
   handleChange = (event) => {
     let valueInput = event.target.value;
     let nameInput = event.target.name;
@@ -139,6 +142,7 @@ class Home extends React.Component {
     // console.log(valueInput,nameInput)
   };
 
+  //------- si l'utilisateur click sur add pour ajouter l'etudiant sur firebase
   addStudent = (event) => {
     // ne pas acctualiser la page
     event.preventDefault();
@@ -205,7 +209,7 @@ class Home extends React.Component {
     }
   };
 
-  // recuperer la liste des etudiants depuis firebase onload page avec firebase
+  //------recuperer la liste des etudiants depuis firebase onload page avec firebase
   componentDidMount() {
     axios.get("students.json").then((response) => {
       if (response.data != null) {
@@ -233,7 +237,7 @@ class Home extends React.Component {
     });
   }
 
-  //----- handle delete
+  //----- handle delete pour supprimer un etudiant par id 
   deleteStudent = (idStudent) => {
     let choice = window.confirm("Are you sure ?");
 
@@ -326,4 +330,4 @@ class Home extends React.Component {
   };
 }
 
-export default Home;
+export default AdminPage;

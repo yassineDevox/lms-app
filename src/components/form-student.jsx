@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function NewStudent(props) {
+export default function FormStudent(props) {
   return (
     <div className="col-4 border p-5">
       <h1 style={{ fontSize: "23px" }} className="title text-warning ">
