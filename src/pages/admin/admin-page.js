@@ -1,13 +1,13 @@
 import React from "react";
 
 //----- importation des composants
-import FormStudent from "/components/form-student";
-import ListStudent from "/components/list-student";
-import StudentModel from "/models/student-model";
-import ModalViewInfo from "/shared/modal-view-info";
+import FormStudent from "./../../components/form-student";
+import ListStudent from "./../../components/list-student";
+import StudentModel from "./../../models/student-model";
+import ModalViewInfo from "./../../shared/modal-view-info";
 
 //--- import axios for ajax functions
-import axios from "/utils/axios";
+import axios from "./../../utils/axios";
 
 //--- import css
 import "./admin-page.css";
@@ -17,8 +17,9 @@ class AdminPage extends React.Component {
   constructor() {
     // call the constructor of the parent class React.Component
     super();
-    //data
+    //data  
     this.state = {
+      studentInfosState:{},
       nom: "",
       pren: "",
       email: "",
@@ -65,11 +66,7 @@ class AdminPage extends React.Component {
 
         {/* My Modal for view more student infos */}
         <ModalViewInfo 
-            avatar={this.state.avatar}
-            nom={this.state.nom}
-            pren={this.state.pren}
-            email={this.state.email}
-            action={this.state.action}
+            studentInfos={this.state.studentInfosState}
         />
       </>
     );
@@ -77,7 +74,6 @@ class AdminPage extends React.Component {
   //------- handleCancelEdit
   handleCancelEdit = () => {
          
-
       //vider les variables state
       this.setState({
         nom: "",
@@ -96,16 +92,11 @@ class AdminPage extends React.Component {
 
     //------ ajouter les infos au state
     this.setState({
-      nom:studentInfos.nom,
-      pren:studentInfos.pren,
-      email:studentInfos.email,
-      avatar:studentInfos.avatar,
-      isPresent:studentInfos.isPresent,//just added for view details 
+      studentInfosState:studentInfos,
       updatedStudent_id:studentInfos.id
     })
 
     //------ passer toute les state vers le composant modal 
-
 
   }
 
