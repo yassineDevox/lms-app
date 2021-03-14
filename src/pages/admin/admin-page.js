@@ -1,8 +1,8 @@
 import React from "react";
 
 //----- importation des composants
-import FormStudent from "./../../components/form-student";
-import ListStudent from "./../../components/list-student";
+import FormStudent from "../../components/student/form-student";
+import ListStudent from "./../../components/student/list-student";
 import StudentModel from "./../../models/student-model";
 import ModalViewInfo from "./../../shared/modal-view-info";
 
