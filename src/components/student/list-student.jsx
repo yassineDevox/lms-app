@@ -21,6 +21,7 @@ export default function ListStudent(props) {
                     data={s}
                     handleDeleteFromList={props.handleDeleteFromHome}
                     handleEditFromList = {props.handleEditFromHome}
+                    handle_MoreInfo_FromList = {props.handle_MoreInfo_FromHome}
               />
             )
            }

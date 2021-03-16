@@ -26,24 +26,34 @@ export default function Student(props) {
 
         <div className="d-flex flex-column"
          >
-          <button className="mz-1 btn btn-info m-1" 
-          data-toggle="modal" 
-          data-target="#moreInfo">
+          <button 
+                className="mz-1 btn btn-info m-1" 
+                data-toggle="modal" 
+                data-target="#moreInfo"
+                onClick={ () => props.handle_MoreInfo_FromList( props.data ) }  
+          >
             <i className="fas fa-eye" />
+
           </button>
+          
           {/* lors du click tu passe l'objet student vers list  */}
           <button onClick={ () => props.handleEditFromList(props.data) } className="mz-1 btn btn-warning m-1">
             <i className="fas fa-edit" />
           </button>
-          <button 
-          onClick={() => props.handleDeleteFromList(props.data.id)} className="mz-1 btn btn-danger m-1">
+
+
+          <button  onClick={() => props.handleDeleteFromList(props.data.id)} className="mz-1 btn btn-danger m-1">
             <i className="fas fa-trash" />
           </button>
         </div>
+
+
       </div>
       <p className="text-center text-white fullname">
         {props.data.nom} {props.data.pren}
       </p>
+
+      
     </div>
   );
 }

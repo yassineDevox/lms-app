@@ -8,6 +8,7 @@ import React from "react";
 import "./home.css";
 import StudentModel from "../../models/student-model";
 import axios from "../../utils/axios";
+import ModalShared from "../../shared/modal-shared";
 
 class Home extends React.Component {
   constructor() {
@@ -15,16 +16,19 @@ class Home extends React.Component {
     super();
     //data
     this.state = {
+      moreInfo: {},
+      isPresent: true,
       nom: "",
       pren: "",
       email: "",
       avatar: "",
       updatedStudent_id: -1,
       list_student_data: [],
-      backupForFilterList : [],
+      backupForFilterList: [],
       textBtnState: "Add Student",
       iconBtnState: "fas fa-plus-circle",
       action: "ADD",
+      cancelEditState:false,
     };
     console.log(this.state);
   }
@@ -49,6 +53,8 @@ class Home extends React.Component {
             handleChange={this.handleChange}
             handleAddSubmit={this.addStudent}
             handleEditSubmit={this.submitEditStudent}
+            cancelEdit={this.state.cancelEditState}
+            handle_cancelEditStudent_FromHome={this.cancelEditStudent}
           />
 
           <ListStudent
@@ -56,57 +62,83 @@ class Home extends React.Component {
             handleDeleteFromHome={this.deleteStudent}
             handleEditFromHome={this.editStudent}
             handleFilterFromHome={this.filterStudentsByName}
+            handle_MoreInfo_FromHome={this.moreInfo}
           />
-
         </div>
-        
-<div>
-  {/* Button trigger modal */}
- 
-  {/* Modal */}
-  <div className="modal fade" id="moreInfo" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div className="modal-dialog">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-        </div>
-        <div className="modal-body">
-          ...
-        </div>
-        <div className="modal-footer">
-          <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" className="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+        {/* Modal */}
+        <ModalShared moreInfo={this.state.moreInfo} handleSetPresence={this.handleSetPresence} />
       </>
     );
   }
 
-  //------- filter students by name
-  filterStudentsByName = (event) => {
+  //--------handleSetPresence
+  handleSetPresence=()=>{
+    
+    // changer la liste cote client 
+    let newList = this.state.list_student_data;
 
-    // changer le format en minuscule
-    let query = event.target.value.toLowerCase();
-    // changer la liste 
-    if(query=="")
-    {
-      this.setState({list_student_data:this.state.backupForFilterList})
-    }
-    else {
+    newList.forEach(s=>{
+    
+      if(s.id==this.state.moreInfo.id){
+        s.isPresent = !s.isPresent
+      }
+    
+    })
 
-      let newList = this.state.list_student_data.filter((s) =>
-        s.nom.toLowerCase().includes(query) ||
-        s.pren.toLowerCase().includes(query)
-      );
-      
-      this.setState({list_student_data:newList})
-    }
+    this.setState({list_student_data:newList})
+    //appliquer le changement sur moreInfo  
+    let data_student = {...this.state.moreInfo,isPresent:!this.state.moreInfo.isPresent}
+    //changer cote serveur
+    axios.put("students/"+this.state.moreInfo.id+".json",data_student);
     
 
+  }
+
+  //----cancelEditStudent
+  cancelEditStudent = () => {
+
+      //vider les variables state
+      this.setState({
+        nom: "",
+        pren: "",
+        email: "",
+        avatar: "",
+        updatedStudent_id: -1,
+        textBtnState: "Add Student",
+        iconBtnState: "fas fa-plus-circle",
+        action: "ADD",
+        cancelEditState:false
+      });
+    
+  }
+
+
+
+  //---- handle more info
+
+  moreInfo = (studentInfos) => {
+    //---copier vers state en utilisant l'operateur spread
+    this.setState({ moreInfo: { ...studentInfos } });
+
+    //-----
+  };
+
+  //------- filter students by name
+  filterStudentsByName = (event) => {
+    // changer le format en minuscule
+    let query = event.target.value.toLowerCase();
+    // changer la liste
+    if (query == "") {
+      this.setState({ list_student_data: this.state.backupForFilterList });
+    } else {
+      let newList = this.state.list_student_data.filter(
+        (s) =>
+          s.nom.toLowerCase().includes(query) ||
+          s.pren.toLowerCase().includes(query)
+      );
+
+      this.setState({ list_student_data: newList });
+    }
 
     console.log(event.target.value);
   };
@@ -144,7 +176,7 @@ class Home extends React.Component {
         this.state.pren,
         this.state.email,
         this.state.avatar,
-        false
+        true //--- on suppose que toutes les eleves sont present
       );
 
       // vider les states
@@ -207,9 +239,9 @@ class Home extends React.Component {
         });
 
         //ajouter la liste
-        this.setState({ list_student_data : listEtudiant });
-        // ajouter un backup 
-        this.setState({ backupForFilterList : listEtudiant });
+        this.setState({ list_student_data: listEtudiant });
+        // ajouter un backup
+        this.setState({ backupForFilterList: listEtudiant });
       }
     });
   }
@@ -226,7 +258,7 @@ class Home extends React.Component {
         );
 
         this.setState({ list_student_data: newList });
-        //changer le backup aussi 
+        //changer le backup aussi
         this.setState({ backupForFilterList: newList });
       });
     }
@@ -247,12 +279,15 @@ class Home extends React.Component {
       email: updatedStudent.email,
       avatar: updatedStudent.avatar,
       updatedStudent_id: updatedStudent.id,
+      isPresent: updatedStudent.isPresent,
     });
 
     // changer l'action du state
     this.setState({ action: "EDIT" });
 
-    console.log(updatedStudent);
+    // afficher cancel edit btn 
+    this.setState({cancelEditState:true})
+    
   };
 
   //------- submitEditStudent la fonction qui va changer l'etudiant depuis firebase
@@ -266,6 +301,7 @@ class Home extends React.Component {
       pren: this.state.pren,
       email: this.state.email,
       avatar: this.state.avatar,
+      isPresent: this.state.isPresent,
     };
 
     // appel a la fonction put de axios
