@@ -24,8 +24,11 @@ export default function Student(props) {
           </div>
         </div>
 
-        <div className="d-flex flex-column ">
-          <button className="mz-1 btn btn-info m-1">
+        <div className="d-flex flex-column"
+         >
+          <button className="mz-1 btn btn-info m-1" 
+          data-toggle="modal" 
+          data-target="#moreInfo">
             <i className="fas fa-eye" />
           </button>
           {/* lors du click tu passe l'objet student vers list  */}
