@@ -1,5 +1,6 @@
 
 export default function ModalShared(props) {
+
     return (
         <div
           className="modal fade"

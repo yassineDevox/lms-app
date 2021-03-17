@@ -65,8 +65,16 @@ class Home extends React.Component {
             handle_MoreInfo_FromHome={this.moreInfo}
           />
         </div>
+        
+        
         {/* Modal */}
-        <ModalShared moreInfo={this.state.moreInfo} handleSetPresence={this.handleSetPresence} />
+        <ModalShared 
+          moreInfo={this.state.moreInfo} 
+          handleSetPresence={this.handleSetPresence} 
+        />
+
+
+
       </>
     );
   }
@@ -79,15 +87,26 @@ class Home extends React.Component {
 
     newList.forEach(s=>{
     
-      if(s.id==this.state.moreInfo.id){
+      if(s.id == this.state.moreInfo.id){
         s.isPresent = !s.isPresent
       }
     
     })
 
+    //--changer la liste list_student_data
     this.setState({list_student_data:newList})
+    //---- changer la liste backup
+    this.setState({backupForFilterList:newList})
+
     //appliquer le changement sur moreInfo  
-    let data_student = {...this.state.moreInfo,isPresent:!this.state.moreInfo.isPresent}
+    let data_student = {
+      nom:this.state.moreInfo.nom,
+      pren:this.state.moreInfo.pren,
+      email:this.state.moreInfo.email,
+      avatar:this.state.moreInfo.avatar,
+      isPresent:!this.state.moreInfo.isPresent
+    }
+
     //changer cote serveur
     axios.put("students/"+this.state.moreInfo.id+".json",data_student);
     
