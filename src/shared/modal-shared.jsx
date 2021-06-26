@@ -13,12 +13,12 @@ export default function ModalShared(props) {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
-                  More details of <span className="badge bg-warning text-dark">{props.moreInfo.nom} </span>
+                  More details of <span className="badge bg-warning text-dark">{props.moreInfo.nom} </span>{" "}
                   {
                       props.moreInfo.isPresent == true ? 
-                        <span className="badge bg-success text-white">Present 😁</span> 
+                        <span className="badge bg-success text-white"> Present 😁</span> 
                         : 
-                        <span className="badge bg-danger text-white">Absent 😢</span> 
+                        <span className="badge bg-danger text-white"> Absent 😢</span> 
                   }
                 </h5>
                 <button
@@ -26,9 +26,14 @@ export default function ModalShared(props) {
                   className="btn-close"
                   data-bs-dismiss="modal"
                   aria-label="Close"
-                />
+                  style={{border:"none",backgroundColor:"white",zoom:"1.3",opacity:".7"}}
+                >
+                  <span aria-hidden="true">
+                <i className="fas fa-times-circle text-danger"></i>
+              </span>
+                </button>
               </div>
-              <div className="modal-body">
+              <div className="modal-body d-flex justify-content-around">
                 <img
                   src={props.moreInfo.avatar}
                   height="150"
@@ -37,21 +42,21 @@ export default function ModalShared(props) {
                 />
                 <ul className=" list-group">
                   <li className="list-group-item">
-                    <span className="badge bg-primary text-white"> nom : </span>
+                    <span className="badge bg-primary text-white"> nom : </span>{" "}
                     {props.moreInfo.nom}
                   </li>
                   <li className="list-group-item">
                     <span className="badge bg-success text-white">
                      
                       pren :
-                    </span>
+                    </span>{" "}
                     {props.moreInfo.pren}
                   </li>
                   <li className="list-group-item">
                     <span className="badge bg-warning text-dark">
-                      {" "}
-                      email :{" "}
-                    </span>
+                      
+                      email :
+                    </span>{" "}
                     {props.moreInfo.email}
                   </li>
                 </ul>
